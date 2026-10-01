@@ -16,3 +16,8 @@ jobs:
       with:
         username: "Jean"
         greeting: "Salut"
+
+    - name: Exécuter l'action Docker
+      uses: BerberDbz/custom-action-docker/js-action@main
+      with:
+        message: "Salut de l'action Docker"
