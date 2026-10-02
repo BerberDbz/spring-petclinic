@@ -7,14 +7,23 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   call-hello-template:
     uses: ./.github/workflows/hello-template.yml
     with:
       username: Smail
+
+  build:
+    if: github.event_name != 'pull_request'
+    uses: ./.github/workflows/push-image.yml
  
   update-gitops:
-    needs: build # Mettre ici le nom de votre job précédent (celui qui push sur GHCR)
+    needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Cloner le dépôt d'infrastructure
